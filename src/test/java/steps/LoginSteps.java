@@ -1,5 +1,6 @@
 package steps;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -28,33 +29,32 @@ public class LoginSteps
     @Given("user open the portal and go to login page")
     public void user_open_the_portal_and_go_login_page()
     {
+        // call setup function to run the chrome driver
         setup_driver();
-        driver.findElement(By.name("username")).sendKeys("tiliwe5835@swsguide.com");
-        driver.findElement(By.name("password")).sendKeys("Aa102030+++");
-        driver.findElement(By.xpath("//input[contains(@value,'Login')]")).click();
 
+        // navigate to signup page and wait for a few second
         driver.findElement(By.xpath("//a[@href='https://classic.freecrm.com/register/'][contains(.,'Sign Up')]")).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
+        // navigate to login page
         driver.findElement(By.xpath("//a[@href='https://ui.cogmento.com/'][contains(.,'Got an account? Log in here')]")).click();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-
-
 
     }
-    @When("The user enter the email and password and click on login button")
-    public void the_user_enter_the_email_and_password_and_click_on_login_button()
+
+    @When("The user enter the email and password and click on login button and click on login button")
+    public void the_user_enter_the_email_and_password_and_click_on_login_button(DataTable whenData)
     {
+        // wait for a few second before enter username and password and click on login button
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.findElement(By.name("email")).sendKeys(USER_NAME);
-        driver.findElement(By.name("password")).sendKeys("Aa102030+++");
+        driver.findElement(By.name("email")).sendKeys(whenData.cell(0,0));
+        driver.findElement(By.name("password")).sendKeys(whenData.cell(0,1));
         driver.findElement(By.xpath("//div[@class='ui fluid large blue submit button'][contains(.,'Login')]")).click();
     }
 
     @Then("The user should navigate to main the home page")
     public void the_user_should_navigate_to_main_the_home_page()
     {
+        // wait until the username is show then assert on it
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         WebElement username = driver.findElement(By.xpath("//span[contains(@class,'user-display')]"));
         Assert.assertEquals("TEST BDD",username.getText().toUpperCase());
@@ -64,6 +64,8 @@ public class LoginSteps
     @Then("The Current URL is contain home")
     public void the_current_url_is_contain_home()
     {
+        // this wait just to see the username using your easy before exit the browser
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.quit();
     }
 }
