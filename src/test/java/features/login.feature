@@ -6,4 +6,13 @@ Feature: Test the login functionality
     Then  The user should navigate to main the home page
     And   The Current URL is contain home
 
+  Scenario Outline: Login with invalid credentials
+    Given  user open the portal and go to login page to try second
+    When   The user enter the email as "<username>" and "<password>" and click on login button and click on login button
+    Then   Error message should appear
 
+    Examples:
+      |username|password|
+      |tiliwe58335@swsguide.com|Aa1302030+++|
+      |Invalid_email@test.com|Aa102030+++|
+      |Invalid_password@test.com|Aa102030+|
