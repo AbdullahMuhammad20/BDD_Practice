@@ -8,4 +8,7 @@ Now you can see and check more than one example here in this repo and you can se
  - Cucumber Options
  - Cucumber Hocks
 
-Very soon ISA you will see all of the above code will be add on the freamwork 
+now the project has customized to POM freamwork and add the following:-
+- Build base class
+- Add Properties file
+- Make the project working with Dynamic browsers
